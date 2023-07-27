@@ -1,0 +1,12 @@
+pipeline{
+    agent any
+    stages{
+      stage('deploy-image'){
+            steps{
+                sh 'docker stop ditiss'
+                sh 'docker rm ditiss'
+                sh 'docker run --name ditiss -p 9500:80 -d cdac:v1'
+            }
+        }
+    }
+}
