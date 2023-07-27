@@ -1,0 +1,22 @@
+pipeline{
+    agent any
+    stages{
+        stage('fetch-code'){
+            steps{
+                git 'https://github.com/AmitKumar-8986/demo.git'
+            }
+        }
+        stage('build-image'){
+            steps{
+                sh 'docker build -t cdac:v1 .'
+            }
+        }
+        stage('deploy-image'){
+            steps{
+                sh 'docker stop ditiss'
+                sh 'docker rm ditiss'
+                sh 'docker run --name ditiss -p 9400:80 -d cdac:v1'
+            }
+        }
+    }
+}
